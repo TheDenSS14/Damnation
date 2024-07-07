@@ -66,7 +66,9 @@ internal sealed class ChatManager : IChatManager
                 else
                     _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                 break;
-
+            case ChatSelectChannel.Subtle: // Floofstation
+                _consoleHost.ExecuteCommand($"subtle \"{CommandParsing.Escape(str)}\"");
+                break;
             // TODO sepearate radio and say into separate commands.
             case ChatSelectChannel.Radio:
             case ChatSelectChannel.Local:
