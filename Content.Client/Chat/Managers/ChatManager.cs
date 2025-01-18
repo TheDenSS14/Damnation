@@ -69,6 +69,9 @@ internal sealed class ChatManager : IChatManager
             case ChatSelectChannel.Subtle: // Floofstation
                 _consoleHost.ExecuteCommand($"subtle \"{CommandParsing.Escape(str)}\"");
                 break;
+            case ChatSelectChannel.SubtleOOC: // Den
+                _consoleHost.ExecuteCommand($"subtleooc \"{CommandParsing.Escape(str)}\"");
+                break;
             // TODO sepearate radio and say into separate commands.
             case ChatSelectChannel.Radio:
             case ChatSelectChannel.Local:
