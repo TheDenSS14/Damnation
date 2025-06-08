@@ -508,7 +508,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
 
-        var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage));
+        var message = TransformSpeech(source, originalMessage);
+
         if (message.Length == 0)
             return;
 
@@ -544,15 +545,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             if (session.AttachedEntity is not { Valid: true } listener
                 || session.AttachedEntity.HasValue && HasComp<GhostComponent>(session.AttachedEntity.Value)
-                || !_interactionSystem.InRangeUnobstructed(source, listener, WhisperClearRange, SubtleCollisionGroup)
                 // Won't get logged to chat, and ghosts are too far away to see the pop-up, so we just won't send it to them.
                 || MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full)
                 continue;
 
-            if (data.Range <= WhisperClearRange)
+            if (_interactionSystem.InRangeUnobstructed(source, listener, WhisperClearRange, SubtleCollisionGroup))
                 _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, false, session.Channel);
             //If listener is too far, they only hear fragments of the message
-            else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange))
+            else if (_interactionSystem.InRangeUnobstructed(source, listener, WhisperMuffledRange))
                 _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, false, session.Channel);
             //If listener is too far and has no line of sight, they can't identify the whisperer's identity
             else
