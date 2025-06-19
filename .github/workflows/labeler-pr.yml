@@ -11,7 +11,7 @@ jobs:
       pull-requests: write
       issues: write
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: "${{ secrets.BARK_TOKEN }}"
     steps:
     - uses: actions/labeler@v5
-      with:
-        repo-token: ${{ secrets.BOT_TOKEN }}
