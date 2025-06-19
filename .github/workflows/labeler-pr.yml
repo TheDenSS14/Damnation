@@ -5,10 +5,13 @@ on:
 
 jobs:
   labeler:
-    if: github.actor != 'PJBot' && github.actor != 'FrontierATC' # Frontier
+    if: github.actor != 'PJBot' && github.actor != 'TheDen-Bot' # Frontier
     permissions:
       contents: read
       pull-requests: write
+      issues: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/labeler@v5
+      with:
+        repo-token: ${{ secrets.BOT_TOKEN }}
