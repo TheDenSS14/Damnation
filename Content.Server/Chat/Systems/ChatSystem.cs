@@ -5,10 +5,9 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Ghost;
-using Content.Server.Speech.Components;
-using Content.Server.Speech.EntitySystems;
+using Content.Server.Players.RateLimiting;
 using Content.Server.Speech.Prototypes;
+using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
@@ -19,7 +18,6 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Players.RateLimiting;
@@ -36,8 +34,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using Content.Shared.Language.Components;
-using Content.Shared.Physics;
 
 namespace Content.Server.Chat.Systems;
 
@@ -70,8 +66,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     public const int WhisperMuffledRange = 5; // how far whisper goes at all, in world units
     public readonly Color DefaultSpeakColor = Color.White;
     public const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
-    public readonly Color DefaultSpeakColor = Color.White;
-    private readonly CollisionGroup _subtleWhisperMask = CollisionGroup.Impassable;
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
@@ -532,12 +526,16 @@ public sealed partial class ChatSystem : SharedChatSystem
         var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
             ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
 
+        var wrappedobfuscatedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
+            ("entityName", nameIdentity), ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
+
+        var wrappedUnknownMessage = Loc.GetString("chat-manager-entity-whisper-unknown-wrap-message",
+            ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
+
+
         foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
         {
-            if (session.AttachedEntity is not { Valid: true } listener
-                || session.AttachedEntity.HasValue && HasComp<GhostComponent>(session.AttachedEntity.Value)
-                || !_interactionSystem.InRangeUnobstructed(source, listener, WhisperClearRange, _subtleWhisperMask))
-                continue;
+            EntityUid listener;
 
             if (session.AttachedEntity is not { Valid: true } playerEntity)
                 continue;
@@ -547,17 +545,11 @@ public sealed partial class ChatSystem : SharedChatSystem
                 continue; // Won't get logged to chat, and ghosts are too far away to see the pop-up, so we just won't send it to them.
 
             if (data.Range <= WhisperClearRange)
-            {
-                // Scenario 1: the listener can clearly understand the message
-                result = perceivedMessage;
-                wrappedMessage = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", name, result, language);
-            }
-            else if (_interactionSystem.InRangeUnobstructed(source, listener, WhisperMuffledRange, CollisionGroup.Opaque))
-            {
-                // Scenario 2: if the listener is too far, they only hear fragments of the message
-                result = ObfuscateMessageReadability(perceivedMessage);
-                wrappedMessage = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", nameIdentity, result, language);
-            }
+                _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, false, session.Channel);
+            //If listener is too far, they only hear fragments of the message
+            else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange))
+                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, false, session.Channel);
+            //If listener is too far and has no line of sight, they can't identify the whisperer's identity
             else
                 _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedUnknownMessage, source, false, session.Channel);
         }
@@ -646,9 +638,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         foreach (var (session, data) in GetRecipients(source, WhisperClearRange))
         {
-            if (session.AttachedEntity is not { Valid: true } listener
-                || session.AttachedEntity.HasValue && HasComp<GhostComponent>(session.AttachedEntity.Value)
-                || !_interactionSystem.InRangeUnobstructed(source, listener, WhisperClearRange, _subtleWhisperMask))
+            if (session.AttachedEntity is not { Valid: true } listener)
                 continue;
 
             if (MessageRangeCheck(session, data, range) == MessageRangeCheckResult.Disallowed)
@@ -773,20 +763,10 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         foreach (var (session, data) in GetRecipients(source, VoiceRange))
         {
-            if (session.AttachedEntity is not { Valid: true } playerEntity)
-                continue;
-
-            if (Transform(playerEntity).GridUid != Transform(source).GridUid
-                && !CheckAttachedGrids(source, session.AttachedEntity.Value))
-                continue;
-
             var entRange = MessageRangeCheck(session, data, range);
-
             if (entRange == MessageRangeCheckResult.Disallowed)
                 continue;
-
             var entHideChat = entRange == MessageRangeCheckResult.HideChat;
-
             _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.Channel, author: author);
         }
 
