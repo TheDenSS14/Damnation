@@ -49,6 +49,7 @@ using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Chat;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 

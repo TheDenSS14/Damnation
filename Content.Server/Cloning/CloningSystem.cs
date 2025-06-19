@@ -42,7 +42,8 @@ using Content.Server.Traits.Assorted;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared._NF.Cloning; // Frontier
 using Content.Shared._NF.Bank.Components; // Frontier
-using Content.Server._NF.Traits.Assorted; // Frontier
+using Content.Server._NF.Traits.Assorted;
+using Content.Shared.Chat; // Frontier
 
 namespace Content.Server.Cloning
 {

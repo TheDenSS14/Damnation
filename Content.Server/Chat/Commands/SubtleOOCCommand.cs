@@ -7,17 +7,19 @@ using Robust.Shared.Enums;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed class SayCommand : IConsoleCommand
+    internal sealed class SubtleOOCCommand : IConsoleCommand
     {
-        public string Command => "say";
-        public string Description => "Send chat messages to the local channel or a specified radio channel.";
-        public string Help => "say <text>";
+        public string Command => "subtleooc";
+        public string Description => "Perform an subtle action.";
+        public string Help => "subtleooc <text>";
+
+        private const string SubtleOOCColor = "#ff7782";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
-                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
+                shell.WriteError("This command cannot be run from the server.");
                 return;
             }
 
@@ -38,7 +40,7 @@ namespace Content.Server.Chat.Commands
                 return;
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>()
-                .TrySendInGameICMessage(playerEntity, message, InGameICChatType.Speak, ChatTransmitRange.Normal, false, shell, player);
+                .TrySendInGameICMessage(playerEntity, message, InGameICChatType.SubtleOOC, ChatTransmitRange.NoGhosts, false, shell, player, color: SubtleOOCColor);
         }
     }
 }
