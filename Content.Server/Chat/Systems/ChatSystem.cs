@@ -256,13 +256,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         switch (desiredType)
         {
             case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, range, nameOverride, language, hideLog, ignoreActionBlocker);
+                SendEntitySpeak(source, message, range, nameOverride, hideLog, ignoreActionBlocker);
                 break;
             case InGameICChatType.Whisper:
                 SendEntityWhisper(source, message, range, null, nameOverride, hideLog, ignoreActionBlocker);
                 break;
             case InGameICChatType.Emote:
-                SendEntityEmote(source, message, range, nameOverride, language, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker, separateNameAndMessage: separateNameAndMessage);
+                SendEntityEmote(source, message, range, nameOverride,  hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker, separateNameAndMessage: separateNameAndMessage);
                 break;
             case InGameICChatType.Subtle:
                 SendEntitySubtle(source, message, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker, color: color, separateNameAndMessage: separateNameAndMessage);
@@ -625,7 +625,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (checkEmote)
             TryEmoteChatInput(source, action);
 
-        SendInVoiceRange(ChatChannel.Emotes, name, action, wrappedMessage, obfuscated: "", obfuscatedWrappedMessage: "", source, range, author);
+        SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
 
         if (!hideLog)
             if (name != Name(source))
