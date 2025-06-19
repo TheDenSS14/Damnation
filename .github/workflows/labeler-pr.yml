@@ -12,6 +12,6 @@ jobs:
       issues: write
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: "${{ secrets.BARK_TOKEN }}"
+      GITHUB_TOKEN: "${{ secrets.BOT_TOKEN }}"
     steps:
     - uses: actions/labeler@v5
