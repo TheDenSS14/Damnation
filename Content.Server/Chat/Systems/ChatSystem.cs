@@ -250,8 +250,6 @@ public sealed partial class ChatSystem : SharedChatSystem
             }
         }
 
-        message = FormattedMessage.EscapeText(message);
-
         // Otherwise, send whatever type.
         switch (desiredType)
         {
@@ -465,7 +463,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
-            ("message", FormattedMessage.EscapeText(message)));
+            ("message", message));
 
         SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, range);
 
@@ -532,13 +530,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         name = FormattedMessage.EscapeText(name);
 
         var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
+            ("entityName", name), ("message", message));
 
         var wrappedobfuscatedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", nameIdentity), ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
+            ("entityName", nameIdentity), ("message", obfuscatedMessage));
 
         var wrappedUnknownMessage = Loc.GetString("chat-manager-entity-whisper-unknown-wrap-message",
-            ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
+            ("message", obfuscatedMessage));
 
 
         foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
@@ -606,7 +604,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         // get the entity's apparent name (if no override provided).
         var ent = Identity.Entity(source, EntityManager);
         var name = FormattedMessage.EscapeText(nameOverride ?? Name(ent));
-        action = FormattedMessage.RemoveMarkupPermissive(action);
         var useSpace = !action.StartsWith("\'s") || !action.StartsWith(",");
         var space = useSpace || separateNameAndMessage ? " " : "";
         var locString = "chat-manager-entity-me-wrap-message";
@@ -652,7 +649,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         // get the entity's apparent name (if no override provided).
         var ent = Identity.Entity(source, EntityManager);
         var name = FormattedMessage.EscapeText(nameOverride ?? Name(ent));
-        action = FormattedMessage.RemoveMarkupPermissive(action);
         var useSpace = !action.StartsWith("\'s") || !action.StartsWith(",");
         var space = useSpace || separateNameAndMessage ? " " : "";
         var locString = "chat-manager-entity-subtle-wrap-message";
