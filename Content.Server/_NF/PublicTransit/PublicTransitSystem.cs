@@ -14,6 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 using Content.Server._NF.Station.Systems;
+using Content.Shared.Chat;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
 
@@ -300,7 +301,7 @@ public sealed class PublicTransitSystem : EntitySystem
             {
                 //we set up a default in case the second time we call it fails for some reason
                 transitComp.NextStation = destination;
-                
+
                 // Ensure the shuttle is undocked before initiating FTL travel
                 _dockSystem.UndockDocks(shuttle);
                 _shuttles.FTLToDock(shuttle, shuttleComp, destination, hyperspaceTime: 5f);
