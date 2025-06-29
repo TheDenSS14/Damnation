@@ -4918,3 +4918,67 @@ Entries:
   id: 587
   time: '2025-06-27T05:50:03.0000000+00:00'
   url: https://github.com/Monolith-Station/Monolith/pull/989
+- author: sleepyyapril
+  changes:
+    - type: Tweak
+      message: Moved some items from backpack to the Colonel's storage locker.
+    - type: Tweak
+      message: Re-added big range maxcaps
+    - type: Fix
+      message: Colonel ship voucher is now properly given to the Colonel.
+  id: 588
+  time: '2025-06-27T11:29:09.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/996
+- author: sleepyyapril
+  changes:
+    - type: Tweak
+      message: The RPG's projectile speed was lowered slightly.
+    - type: Tweak
+      message: >-
+        EMP RPGs have a tripled range of effect and more power drain, in
+        exchange for slightly less effect duration.
+  id: 589
+  time: '2025-06-28T02:23:42.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/994
+- author: sleepyyapril
+  changes:
+    - type: Tweak
+      message: Most rifles were buffed. No, not the Annie or the WSPR.
+    - type: Tweak
+      message: The Vulcan can hit the broad-side of a barn again.
+  id: 590
+  time: '2025-06-28T02:25:54.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/995
+- author: Mowmow
+  changes:
+    - type: Add
+      message: Adds the BBI Leaf, a new botanical ship, to the civilian shipyard.
+  id: 591
+  time: '2025-06-28T09:04:37.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/929
+- author: bluebrouny
+  changes:
+    - type: Add
+      message: The Ruby science ship!
+  id: 592
+  time: '2025-06-28T09:06:45.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/920
+- author: Redrover1760
+  changes:
+    - type: Add
+      message: Wallets can be used on the ground to vacuum nearby money
+    - type: Fix
+      message: Trash bags now start with magnet toggled off
+  id: 593
+  time: '2025-06-28T18:47:08.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/961
+- author: mikusssssss
+  changes:
+    - type: Add
+      message: >-
+        Added a cube of all the species! We at Nanotrasen offer you the ability
+        to make friends with technology! (CONSCIOUSNESS NOT INCLUDED) Find them
+        at your nearest BioFabricator!
+  id: 594
+  time: '2025-06-28T22:54:23.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/919
