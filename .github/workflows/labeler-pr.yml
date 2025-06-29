@@ -7,11 +7,11 @@ jobs:
   labeler:
     if: github.actor != 'PJBot' && github.actor != 'TheDen-Bot' # Frontier
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
       issues: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/labeler@v5
       with:
-        repo-token: ${{ secrets.BOT_TOKEN }}
+        ref: main
