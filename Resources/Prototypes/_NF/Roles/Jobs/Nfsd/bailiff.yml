@@ -4,8 +4,6 @@
   description: job-description-bailiff
   playTimeTracker: JobWarden
   requirements: # mono - lowers all of these tbh
-    - !type:OverallPlaytimeRequirement
-      time: 72000 # 20 hours
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 # 10 hours

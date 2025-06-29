@@ -4,8 +4,6 @@
   description: job-description-pirate-captain
   playTimeTracker: JobPirateCaptain
   requirements:
-    - !type:OverallPlaytimeRequirement # mono start
-      time: 108000 # 65 hours
     - !type:RoleTimeRequirement
       role: JobPirateFirstMate
       time: 3600 # 1 hour

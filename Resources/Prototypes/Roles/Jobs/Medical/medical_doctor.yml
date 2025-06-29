@@ -4,9 +4,6 @@
   description: job-description-doctor
   playTimeTracker: JobMedicalDoctor
   setPreference: false # Frontier
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 10800
   startingGear: DoctorGear
   icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-hire # Frontier

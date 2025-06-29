@@ -4,8 +4,6 @@
   description: job-description-senior-officer
   playTimeTracker: JobSeniorOfficer
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 90000 # 25 hours # mono
     - !type:DepartmentTimeRequirement
       department: Security
       time: 28800 # 8 hours # mono

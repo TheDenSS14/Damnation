@@ -3,9 +3,6 @@
   name: job-name-ussp-rifleman
   description: job-description-ussp-rifleman
   playTimeTracker: JobUSSPRifleman
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 14400 # 4 hrs
   startingGear: USSPRiflemanGear
   alwaysUseSpawner: true
   hideConsoleVisibility: true

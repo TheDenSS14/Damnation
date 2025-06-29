@@ -4,9 +4,6 @@
   description: job-description-chemist
   playTimeTracker: JobChemist
   setPreference: false # Frontier
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 10800
   startingGear: ChemistGear
   icon: "JobIconChemist"
   supervisors: job-supervisors-hire # Frontier
