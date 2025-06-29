@@ -3,9 +3,6 @@
   name: job-name-pilot
   description: job-description-pilot
   playTimeTracker: JobPilot
-  requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 28800 # mono - change to 8hrs
   startingGear: PilotGear
   icon: "JobIconPilot"
   supervisors: job-supervisors-hire
