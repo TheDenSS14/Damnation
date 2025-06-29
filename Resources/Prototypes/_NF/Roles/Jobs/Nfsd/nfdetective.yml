@@ -4,8 +4,6 @@
   description: job-description-nf-detective
   playTimeTracker: JobDetective
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 10800 # 3 hours # mono
     - !type:DepartmentTimeRequirement
       department: Security
       time: 7200 # 2 hours # mono

@@ -3,9 +3,6 @@
   name: job-name-md-medic
   description: job-description-md-medic
   playTimeTracker: MdMedic
-  requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 54000 # 15 hrs
   startingGear: MdMedicGear
   alwaysUseSpawner: true
   icon: "JobIconMedicalDoctor"

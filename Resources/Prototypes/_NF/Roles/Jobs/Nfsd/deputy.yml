@@ -4,8 +4,6 @@
   description: job-description-deputy
   playTimeTracker: JobSecurityOfficer
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 43200 # 12 hours # mono
     - !type:DepartmentTimeRequirement
       department: Security
       time: 7200 # 2 hours # mono
